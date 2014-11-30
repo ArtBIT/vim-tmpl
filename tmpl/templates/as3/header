@@ -1,0 +1,3 @@
+#!/bin/bash
+echo "// vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4 ft=actionscript: "
+tmpl djordjeungar_header

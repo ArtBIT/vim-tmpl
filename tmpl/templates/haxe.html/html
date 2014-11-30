@@ -1,0 +1,23 @@
+#!/bin/bash
+declare -A VARS=( ["CLASS"]="App" )
+
+for VAR in "${!VARS[@]}"; do
+    VAL=${1:-${VARS[$VAR]}}
+    export $VAR=$VAL
+    shift
+done
+
+#--------Begin here document-----------#
+cat $TEMPLATE <<EOF
+<html>
+    <head>
+        <title>$CLASS</title>
+    </head>
+    <body>
+        <div id="haxe:jeash" style="width:150px; height: 150px"></div>
+        <script type="text/javascript" src="./$CLASS.js"></script>
+        <div id="haxe:trace"></div>
+    </body>
+</html>
+EOF
+#--------End here document-----------#

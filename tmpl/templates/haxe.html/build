@@ -1,0 +1,21 @@
+#!/bin/bash
+
+declare -A VARS=( ["CLASS"]="App" )
+
+for VAR in "${!VARS[@]}"; do
+    VAL=${1:-${VARS[$VAR]}}
+    export $VAR=$VAL
+    shift
+done
+
+#uppercase first letter
+CLASS=`echo $CLASS | sed 's/^\([a-z]\)/\u\1/g'`
+
+#--------Begin here document-----------#
+cat $TEMPLATE <<EOF
+#!/bin/sh
+
+. src/bump_version
+haxe $CLASS.hxml
+EOF
+#--------End here document-----------#

@@ -1,0 +1,25 @@
+#/bin/bash
+
+declare -A VARS=( ["CLASS"]="Main" )
+
+for VAR in "${!VARS[@]}"; do
+    VAL=${1:-${VARS[$VAR]}}
+    export $VAR=$VAL
+    shift
+done
+#
+#--------Begin here document-----------#
+cat $TEMPLATE <<EOF
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4 fdm=marker: */
+// @@require jms/lib/Base.js
+(function(window) {
+    window.$CLASS = Base.extend({
+        constructor: function() {
+            //
+        }
+    });
+})(window);
+
+EOF
+#--------End here document-----------#
+

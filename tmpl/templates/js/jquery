@@ -1,0 +1,9 @@
+#/bin/bash
+#--------Begin here document-----------#
+cat $TEMPLATE <<EOF
+    jQuery(document).ready(function() {
+        // on DOM ready
+    });
+EOF
+#--------End here document-----------#
+

@@ -1,0 +1,30 @@
+#!/bin/bash
+
+declare -A VARS=( ["CLASS"]="Main" ["PACKAGE"]="" )
+
+for VAR in "${!VARS[@]}"; do
+    VAL=${1:-${VARS[$VAR]}}
+    export $VAR=$VAL
+    shift
+done
+
+#--------Begin here document-----------#
+cat $TEMPLATE <<EOF
+package $PACKAGE;
+
+/**
+* $CLASS 
+* 
+* @package $PACKAGE 
+*/
+class $CLASS {
+    static function main() {
+        // create a TextField
+        var tf = new flash.text.TextField();
+        tf.text = "Hello World !";
+        // add it to the display list
+        flash.Lib.current.addChild(tf);
+    }
+} // End Class $CLASS
+EOF
+#--------End here document-----------#

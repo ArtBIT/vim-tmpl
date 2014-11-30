@@ -1,0 +1,77 @@
+#!/bin/bash
+declare -A VARS=( ["CLASS"]="Main" ["PACKAGE"]="" )
+
+for VAR in "${!VARS[@]}"; do
+    VAL=${1:-${VARS[$VAR]}}
+    export $VAR=$VAL
+    shift
+done
+
+#--------Begin here document-----------#
+cat $TEMPLATE <<EOF
+package $PACKAGE {
+
+	import flash.display.StageAlign;
+	import flash.display.StageQuality;
+	import flash.display.StageScaleMode;
+   import flash.display.Sprite;
+   import flash.events.*;
+   import flash.ui.Keyboard;
+   import com.djordjeungar.events.KeyComboEvent;
+
+   /**
+    * $CLASS 
+    * 
+    * @extends Sprite
+    * @package $PACKAGE 
+    */
+   [SWF( width=600, height=560, frameRate=30, backgroundAlpha=0 )]
+      public class $CLASS extends Sprite {
+         include 'version.as';
+
+         // ====================
+         // = Member variables =
+         // ====================
+
+         /* Constructor */
+         public function $CLASS():void {
+            Logger.log("$CLASS v"+VERSION);
+            Logger.log("--------------------------------");
+
+            addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+         }
+         // =========================
+         // = Public Implementation =
+         // =========================
+
+         // ==========================
+         // = Private Implementation =
+         // ==========================
+
+         // ===================
+         // = Event Listeners =
+         // ===================
+         private function onAddedToStage(event:Event):void {
+            stage.align = StageAlign.TOP_LEFT;
+            stage.quality = StageQuality.BEST;
+            stage.scaleMode = StageScaleMode.NO_SCALE;
+
+            KeyCombos.initialize(stage);
+            KeyCombos.addCombination('ConsoleToggle', 192);
+            KeyCombos.addEventListener(KeyComboEvent.KEY_COMBO, onKeyCombo);
+            Logger.initialize(stage);
+
+         }
+         private function onKeyCombo(evt:KeyComboEvent):void {
+            switch (evt.name) {
+               case 'ConsoleToggle':
+                  Logger.toggle();
+                  break;
+            }
+         }
+
+      } // End Class $CLASS
+
+} // End Package $PACKAGE
+EOF
+#--------End here document-----------#

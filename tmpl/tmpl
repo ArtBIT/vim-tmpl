@@ -1,0 +1,39 @@
+#!/bin/bash
+SCRIPT_PATH=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+TEMPLATE_PATH="$SCRIPT_PATH/templates"
+RELPATH=''
+ARGS=''
+for ARG in "$@"
+do
+    if [ -f "$TEMPLATE_PATH/$ARG" ]; then
+        RELPATH="$ARG"
+        FILEPATH="$TEMPLATE_PATH/$ARG"
+    else
+        ARGS="$ARGS $ARG"
+    fi
+done
+if [ "$1" == '--help' ]; then
+    usage "$RELPATH"
+else 
+    # Execute
+    if [ -f "$FILEPATH" ]; then
+        if [ "$1" == '--list' ]; then
+            VARS="`set -o posix ; set`"; 
+            # save STDOUT
+            exec 4<&1
+            #redirect 
+            exec 1>/dev/null
+            source "$FILEPATH"; 
+            #restore STDOUT
+            exec 1<&4
+            #echo $SCRIPT_VARS | sed 's/=[^ ]*[ ]*/ /g'
+            if [ "${#VARS[@]}" -gt 1 ]; then
+                echo "${!VARS[@]}"
+            fi
+        else 
+            bash "$FILEPATH" $ARGS
+        fi
+    else
+        echo "Unknown template."
+    fi
+fi

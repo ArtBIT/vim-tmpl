@@ -1,0 +1,19 @@
+#!/bin/bash
+declare -A VARS=( ["CLASS"]="App" )
+
+for VAR in "${!VARS[@]}"; do
+    VAL=${1:-${VARS[$VAR]}}
+    export $VAR=$VAL
+    shift
+done
+
+#--------Begin here document-----------#
+cat $TEMPLATE <<EOF
+--remap flash:jeash
+-cp ./src
+-js output/$CLASS.js
+-main $CLASS
+-lib jQueryExtern
+-lib jeash
+EOF
+#--------End here document-----------#

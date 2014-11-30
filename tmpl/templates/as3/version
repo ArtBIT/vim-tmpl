@@ -1,0 +1,6 @@
+#!/bin/bash
+#--------Begin here document-----------#
+cat $TEMPLATE <<EOF
+		public static const VERSION:String = '0.001';
+EOF
+#--------End here document-----------#

@@ -1,0 +1,16 @@
+#!/bin/bash
+declare -A VARS=( ["CLASS"]="App" )
+
+for VAR in "${!VARS[@]}"; do
+    VAL=${1:-${VARS[$VAR]}}
+    export $VAR=$VAL
+    shift
+done
+
+#--------Begin here document-----------#
+cat $TEMPLATE <<EOF
+-cp ./src
+-swf9 output/$CLASS.swf
+-main $CLASS
+EOF
+#--------End here document-----------#

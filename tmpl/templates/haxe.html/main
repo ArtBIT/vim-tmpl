@@ -1,0 +1,42 @@
+#!/bin/bash
+
+declare -A VARS=( ["CLASS"]="Main" ["PACKAGE"]="" )
+
+for VAR in "${!VARS[@]}"; do
+    VAL=${1:-${VARS[$VAR]}}
+    export $VAR=$VAL
+    shift
+done
+
+#--------Begin here document-----------#
+cat $TEMPLATE <<EOF
+package $PACKAGE;
+
+/**
+* $CLASS 
+* 
+* @package $PACKAGE 
+*/
+
+import JQuery;
+import flash.Lib;
+import flash.display.Shape;
+import flash.display.Sprite;
+
+class $CLASS extends Sprite
+{
+    static function main ()
+    {
+        var ellipse:Shape = new Shape();
+        ellipse.graphics.beginFill( 0xFF9900, 1 );
+        ellipse.graphics.lineStyle( 0, 0xCCCCCC );
+        ellipse.graphics.drawEllipse( 40, 40, 100, 60 );
+        ellipse.graphics.endFill();
+        
+        var app = new $CLASS();
+        app.addChild( ellipse );
+        Lib.current.stage.addChild( app );
+    }
+} // End Class $CLASS
+EOF
+#--------End here document-----------#

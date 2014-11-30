@@ -1,0 +1,29 @@
+#!/bin/bash
+declare -A VARS=( ["CLASS"]="GenericClass" ["PACKAGE"]="" )
+
+for VAR in "${!VARS[@]}"; do
+    VAL=${1:-${VARS[$VAR]}}
+    export $VAR=$VAL
+    shift
+done
+
+#--------Begin here document-----------#
+cat $TEMPLATE <<EOF
+/**
+ * $CLASS 
+ * 
+ * @package $PACKAGE 
+ */
+package $PACKAGE;
+
+class $CLASS 
+{
+    /* Constructor */
+    public function new():Void 
+    {
+        
+    }
+}
+EOF
+#--------End here document-----------#
+

@@ -1,0 +1,36 @@
+#/bin/bash
+declare -A VARS=( ["FUNCTIONNAME"]="DiFiFunction" )
+
+for VAR in "${!VARS[@]}"; do
+    VAL=${1:-${VARS[$VAR]}}
+    export $VAR=$VAL
+    shift
+done
+
+#--------Begin here document-----------#
+cat $TEMPLATE <<EOF
+,${FUNCTIONNAME}_send: function() {
+    var difi_class  = 'difi_class';
+    var difi_method = 'difi_method';
+    var difi_params = [];
+    var difi_callback = this.${FUNCTIONNAME}_callback.bindTo(this)
+
+    DiFi.pushPost(difi_class, difi_method, difi_params, difi_callback);
+    DiFi.send();
+}
+,${FUNCTIONNAME}_callback: function(success, data) {
+    if (!success) {
+        var error;
+        try {
+            error = data.response.content.error;
+        } catch(e) {
+            error = "Unknown error";
+        }
+        alert('DiFi Error: '+error);
+        return;
+    }
+    var result = data.response.content;
+}
+EOF
+#--------End here document-----------#
+

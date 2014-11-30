@@ -1,0 +1,70 @@
+#!/bin/bash
+declare -A VARS=( ["CLASS"]="Main" ["PACKAGE"]="" )
+
+for VAR in "${!VARS[@]}"; do
+    VAL=${1:-${VARS[$VAR]}}
+    export $VAR=$VAL
+    shift
+done
+
+#--------Begin here document-----------#
+cat $TEMPLATE <<EOF
+//--------------------------------------
+//  IMPORTS
+//--------------------------------------
+
+class $PARAM extends MovieClip {
+	//--------------------------------------
+	//  PUBLIC VARIABLES
+	//--------------------------------------
+
+	//--------------------------------------
+	//  PRIVATE AND PROTECTED VARIABLES
+	//--------------------------------------
+
+	// DYNAMIC ATTACH //
+	private static var _linkage: String = "$CLASS"; //
+	public static function create(scope: MovieClip, name: String, initObj: Object) : $CLASS {
+		var instance = scope.attachMovie(_linkage, name, scope.getNextHighestDepth());
+		instance._init(initObj, String('_x _y _alpha').split(' '));
+        if (typeof initObj.onFirstFrame == 'function') {
+            instance.onEnterFrame = function() {
+                initObj.onFirstFrame.apply(this);
+                delete this.onEnterFrame;
+            }
+        }
+		return instance;
+	}
+    private function _init(settings: Object, initableProperties: Array) {
+        for (var i in initableProperties) {
+            var p = initableProperties[i];
+            if (settings[p] != undefined) {
+                this[p] = settings[p];
+            }
+        }
+    }
+
+    // CONSTRUCTOR //
+    public function $CLASS() {
+        
+    }
+	//--------------------------------------
+	//  PUBLIC METHODS
+	//--------------------------------------
+
+	//--------------------------------------
+	//  GETTERS AND SETTERS
+	//--------------------------------------
+
+	//--------------------------------------
+	//  PRIVATE METHODS
+	//--------------------------------------
+
+    //-------------------------------------
+    //  EVENT LISTENERS
+    //-------------------------------------
+
+} // End Class $CLASS
+
+EOF
+#--------End here document-----------#

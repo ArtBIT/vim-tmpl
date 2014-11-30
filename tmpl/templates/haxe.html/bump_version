@@ -1,0 +1,18 @@
+#!/bin/bash
+
+VERSION_FILE='version.hx'
+#get version
+if [ -e $VERSION_FILE ]; then
+VERSION=$(cat $VERSION_FILE | sed "s/[^']*'//;s/'.*$//;")
+else
+VERSION=0.001
+fi
+
+#bump version
+VERSION=`echo "$VERSION + 0.001" | bc -l`
+
+#if version starts with a dot, prepend it with 0
+VERSION=`echo $VERSION | sed -e 's/^\./0./'`
+
+#save version
+echo "public static const VERSION:String = '$VERSION';" > $VERSION_FILE

@@ -1,0 +1,20 @@
+#!/bin/bash
+
+#get version
+if [ -e version.as ]; then
+VERSION=$(cat version.as | sed "s/[^']*'//;s/'.*$//;")
+else
+VERSION=0.001
+fi
+
+#bump version
+VERSION=`echo "$VERSION + 0.001" | bc -l`
+
+#if version starts with a dot, prepend it with 0
+if [[ $VERSION == \.* ]]
+then 
+    VERSION="0$VERSION"
+fi
+
+#save version
+echo "public static const VERSION:String = '$VERSION';" > version.as

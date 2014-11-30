@@ -1,0 +1,47 @@
+#!/bin/bash
+declare -A VARS=( ["CLASS"]="GenericClass" ["PACKAGE"]="" )
+
+for VAR in "${!VARS[@]}"; do
+    VAL=${1:-${VARS[$VAR]}}
+    export $VAR=$VAL
+    shift
+done
+
+#--------Begin here document-----------#
+cat $TEMPLATE <<EOF
+package $PACKAGE {
+
+    import flash.display.Sprite;
+
+    /**
+     * $CLASS 
+     * 
+     * @extends Sprite
+     * @package $PACKAGE 
+     */
+    public class $CLASS extends Sprite {
+        // ====================
+        // = Member variables =
+        // ====================
+
+        /* Constructor */
+        public function $CLASS():void {
+
+        }
+        // =========================
+        // = Public Implementation =
+        // =========================
+
+        // ==========================
+        // = Private Implementation =
+        // ==========================
+
+        // ===================
+        // = Event Listeners =
+        // ===================
+
+    } // End Class $CLASS
+
+} // End Package $PACKAGE
+EOF
+#--------End here document-----------#
