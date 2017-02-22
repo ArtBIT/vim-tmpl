@@ -1,16 +1,3 @@
-## COPYRIGHT
-Original work Copyright (c) 2007 Djordje Ungar
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
 ## Overview
 
 VIM-TMPL is a plugin with the custom bash templating function
@@ -29,3 +16,6 @@ two most popular ones currently are `pathogen
 <https://github.com/gmarik/Vundle.vim>`_. Please refer to their docs for
 instructions on how to install plugins.
 
+## License
+
+See the [LICENSE](LICENSE) file.
