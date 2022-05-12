@@ -16,6 +16,23 @@ two most popular ones currently are `pathogen
 <https://github.com/gmarik/Vundle.vim>`_. Please refer to their docs for
 instructions on how to install plugins.
 
+## Configuration
+You can create your own templates directory with your own templates
+
+```
+   # i.e. in your $HOME
+   # 
+   # $HOME/templates
+   # $HOME/templates/react
+   # $HOME/templates/react/jsx
+   #
+   # Just export the path in VIM_TMPL_TEMPLATES env var
+   export VIM_TMPL_TEMPLATES=$HOME/templates
+   
+   # And then in nvim
+   :Tmpl react/jsx 
+```
+
 ## License
 
 See the [LICENSE](LICENSE) file.
