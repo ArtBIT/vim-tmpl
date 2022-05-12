@@ -5,7 +5,10 @@ RELPATH=''
 ARGS=''
 for ARG in "$@"
 do
-    if [ -f "$TEMPLATE_PATH/$ARG" ]; then
+    if [ -f "${VIM_TMPL_TEMPLATES}/${ARG}" ]; then
+        RELPATH="$ARG"
+        FILEPATH="${VIM_TMPL_TEMPLATES}/${ARG}"
+    elif [ -f "${TEMPLATE_PATH}/${ARG}" ]; then
         RELPATH="$ARG"
         FILEPATH="$TEMPLATE_PATH/$ARG"
     else
