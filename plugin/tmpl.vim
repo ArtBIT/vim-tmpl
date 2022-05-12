@@ -3,7 +3,7 @@ let g:loaded_tmpl = 1
 let s:path = expand('<sfile>:p:h')
 
 function tmpl#Call(...)
-    return system(s:path . "/../tmpl/tmpl " . join(a:000, ' '))
+    return system(s:path . "/../tmpl/tmpl " . expand("%:t:r") . " " . join(a:000, ' '))
 endfunction
 
 function tmpl#Read(...)
