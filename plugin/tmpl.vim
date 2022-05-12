@@ -9,7 +9,7 @@ endfunction
 function tmpl#Read(...)
     let @a=call('tmpl#Call', a:000)
     normal! G
-    exe "put a"
+    exe "put! a"
 endfunction
 
 if !exists(':Tmpl')
