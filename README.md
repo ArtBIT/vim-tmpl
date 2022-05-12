@@ -32,6 +32,46 @@ You can create your own templates directory with your own templates
    # And then in nvim
    :Tmpl react/jsx 
 ```
+## Example template
+
+Each template is a simple bash script, and can follow this proposed structure
+```lang=sh
+#/bin/bash
+
+# Map positional arguments to varnames and set their default values
+# first argument is always filepath 
+declare -A VARS=( ["FILEPATH"]="./Component/Component.js" )
+
+# Map passed arguments to varnames
+for VAR in "${!VARS[@]}"; do
+    VAL=${1:-${VARS[$VAR]}}
+    export $VAR=$VAL
+    shift
+done
+
+PARENTDIR=$(basename $(dirname -- "$FILEPATH"))
+FILENAME=$(basename -- "$FILEPATH")
+EXTENSION="${FILENAME##*.}"
+NAME="${FILENAME%.*}"
+
+#--------Begin template-----------#
+cat $TEMPLATE <<EOF
+import React from 'react'
+
+interface Props {
+    className?: string;
+}
+
+const ${NAME}:React.FC<Props> = ({className}) => {
+  return <div className={className}></div>
+}
+
+export default ${NAME}
+EOF
+#--------End template-----------#
+
+```
+
 
 ## License
 
