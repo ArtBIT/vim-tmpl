@@ -3,7 +3,11 @@ let g:loaded_tmpl = 1
 let s:path = expand('<sfile>:p:h')
 
 function tmpl#Call(...)
-    return system(s:path . "/../tmpl/tmpl " . expand("%:p") . " " . join(a:000, ' '))
+    " Inject fullpath as the second argument
+    let fullPath = expand("%:p")
+    let args = copy(a:000)
+    call insert(args, [fullPath], 1) 
+    return system(s:path . "/../tmpl/tmpl " . join(args, ' '))
 endfunction
 
 function tmpl#Read(...)
